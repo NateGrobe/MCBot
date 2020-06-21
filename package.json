@@ -1,0 +1,67 @@
+{
+  "name": "mcbot",
+  "productName": "MCBot",
+  "main": "electron/main.js",
+  "version": "0.1.0",
+  "homepage": "./",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@mixer/client-node": "^3.5.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
+    "ws": "^7.3.0"
+  },
+  "scripts": {
+    "start": "export BROWSER=none && react-scripts start",
+    "start-electron": "export ELECTRON_START_URL=http://localhost:3000 && electron .",
+    "build": "react-scripts build",
+    "build-electron": "npm run build && mkdir build/src && cp -r electron/. build/electron && cp -r src/shared/. build/src/shared && cp -r bot/. build/bot",
+    "package": "rm -rf dist && electron-builder build --win -c.extraMetadata.main=build/electron/main.js --publish never",
+    "test": "react-scripts test",
+    "eslint": "eslint .",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "electron": "^9.0.4",
+    "electron-builder": "^22.7.0",
+    "eslint-plugin-jest": "^23.13.2",
+    "redux-devtools-extension": "^2.13.8"
+  },
+  "build": {
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "publish": {
+      "provider": "github",
+      "repo": "MCBot",
+      "owner": "NateGrobe"
+    }
+  }
+}
