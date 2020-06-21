@@ -1,44 +1,24 @@
 import React from 'react'
+
+import { Container } from '@material-ui/core'
+import ChannelForm from './components/ChannelForm'
+import BotPage from './components/BotPage'
 import {
-  Container,
-  TextField,
-  Button,
-} from '@material-ui/core'
+  Link,
+  Switch,
+  Route
+} from 'react-router-dom'
 
-import { findUserId } from './reducers/userReducer'
-import { connect } from 'react-redux'
 
-import { channels } from './shared/constants'
-const { ipcRenderer } = window
 
-const App = (props) => {
+const App = () => {
 
-  const getUserId = async event => {
-    event.preventDefault()
-    const content = event.target.username.value
-    props.findUserId(content)
-  }
 
+  /*
   const startBot = () => {
     ipcRenderer.send(channels.START_BOT, {
       id: props.user.id
     })
-  }
-
-  const userForm = () => {
-    return (
-      <form onSubmit={getUserId}>
-        <div>
-          <TextField label='Username' name='username' />
-        </div>
-        <br />
-        <div>
-          <Button variant='contained' color='primary' type='submit'>
-            submit
-        </Button>
-        </div>
-      </form>
-    )
   }
 
   const onButton = () => {
@@ -56,36 +36,29 @@ const App = (props) => {
       </Button>
     )
   }
+  */
 
-  
-  console.log(props.user)
+  const style = { padding: 5 }
+
 
   return (
     <Container>
-      {props.user.length === 0 && userForm()}
-      {props.user.length !== 0 && props.user.token}
+      <div>
+        <Link style={style} to='/'>Channel</Link>
+        <Link style={style} to='/bot'>Bot</Link>
+      </div>
 
-      <br />
-      <br />
-      
-      {props.user.length !== 0 && onButton()}
-
+      <Switch>
+        <Route path='/bot'>
+          <BotPage />
+        </Route>
+        <Route path='/'>
+          <ChannelForm />
+        </Route>
+      </Switch>
 
     </Container>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.user
-  }
-}
-
-const mapDispatchToProps = {
-  findUserId
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)
+export default App

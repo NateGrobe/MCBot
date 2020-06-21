@@ -25,7 +25,9 @@ async function joinChat(userId, channelId) {
   // Create a chat socket and "boot" it(start it up and connect it)
   const socket = new Mixer.Socket(ws, joinInformation.endpoints).boot()
 
-  return socket.auth(channelId, userId, joinInformation.authkey).then(() => socket)
+  return socket
+    .auth(channelId, userId, joinInformation.authkey)
+    .then(() => socket)
 }
 
 module.exports = { getUserInfo, joinChat }

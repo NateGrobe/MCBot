@@ -43,6 +43,6 @@ app.on('activate', () => {
 })
 
 ipcMain.on(channels.START_BOT, (event, arg) => {
-  mcbot.runBot(arg.id)
+  mcbot.controlBot(arg.id, arg.status)
 })
 

@@ -2,10 +2,10 @@ import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
-import userReducer from '../src/reducers/userReducer'
+import channelReducer from '../src/reducers/channelReducer'
 
 const reducer = combineReducers({
-  user: userReducer,
+  channel: channelReducer
 })
 
 const store = createStore(

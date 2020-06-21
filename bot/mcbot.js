@@ -1,8 +1,18 @@
 const { getUserInfo, joinChat } = require('./botConnection')
+const { validateChatCommand } = require('./botHelper')
 
-async function runBot(channelId) {
+let running = true
+
+function controlBot(channelId, status) {
+  if (status === 'stop'){
+    running = false
+    return
+  } else if (status === 'run' && !running) {
+    running = true
+    return
+  }
+
   getUserInfo().then(async userInfo => {
-
     const socket = await joinChat(userInfo.id, channelId)
 
     // Greet a joined user
@@ -19,7 +29,9 @@ async function runBot(channelId) {
      * ======================== */
 
     socket.on('ChatMessage', data => {
-      if (data.message.message[0].data.toLowerCase().startsWith('!test')) {
+      console.log('running', running)
+      const validMsg = validateChatCommand(data, '!test')
+      if (validMsg && running) {
         socket.call('msg', [`@${data.user_name} called me from an electron app`])
       }
     })
@@ -74,6 +86,9 @@ async function runBot(channelId) {
       console.error(error)
     })
   })
+    .catch(error => {
+      console.log(error.message)
+    })
 }
 
-module.exports = { runBot }
+module.exports = { controlBot }
